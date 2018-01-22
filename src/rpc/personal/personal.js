@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
-const { inAddress, inNumber10, inOptions } = require('../../format/input');
+const { inAddress, inNumber16, inOptions } = require('../../format/input');
 const { outAddress } = require('../../format/output');
 
 class Personal {
@@ -41,7 +41,7 @@ class Personal {
 
   unlockAccount (account, password, duration = 1) {
     return this._provider
-      .send('personal_unlockAccount', inAddress(account), password, inNumber10(duration));
+      .send('personal_unlockAccount', inAddress(account), password, inNumber16(duration));
   }
 }
 
