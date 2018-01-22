@@ -62,13 +62,13 @@ describe('rpc/Personal', () => {
 
     it('passes account, password & duration', () => {
       return instance.unlockAccount(account, 'password', 0xf).then(() => {
-        expect(scope.body.personal_unlockAccount.params).to.deep.equal([account, 'password', 15]);
+        expect(scope.body.personal_unlockAccount.params).to.deep.equal([account, 'password', '0xf']);
       });
     });
 
     it('provides a default duration when not specified', () => {
       return instance.unlockAccount(account, 'password').then(() => {
-        expect(scope.body.personal_unlockAccount.params).to.deep.equal([account, 'password', 1]);
+        expect(scope.body.personal_unlockAccount.params).to.deep.equal([account, 'password', '0x1']);
       });
     });
   });
