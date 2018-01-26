@@ -286,7 +286,7 @@ class Parity {
 
   listAccounts (count, offset = null, blockNumber = 'latest') {
     return this._provider
-      .send('parity_listAccounts', count, inAddress(offset), inBlockNumber(blockNumber))
+      .send('parity_listAccounts', count, offset, inBlockNumber(blockNumber))
       .then((accounts) => (accounts || []).map(outAddress));
   }
 
