@@ -14,23 +14,16 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
-const Current = require('./current');
-const Ipc = require('./ipc');
-const Http = require('./http');
-const PostMessage = require('./postMessage');
-const PromiseProvider = require('./promise');
-const SendAsync = require('./sendAsync');
-const Ws = require('./ws');
+/* eslint-disable no-unused-expressions */
 
-const WsSecure = Ws;
+const IpcProvider = require('./ipc');
 
-module.exports = {
-  Current,
-  Ipc,
-  Http,
-  PostMessage,
-  PromiseProvider,
-  SendAsync,
-  Ws,
-  WsSecure
-};
+function createProvider () {
+  return new IpcProvider('ipc://test.com', '123', false);
+}
+
+describe('provider/IpcProvider', () => {
+  it('throws error if not Electron', () => {
+    expect(createProvider).to.throw('IpcProvider must be used in Electron environment.');
+  });
+});

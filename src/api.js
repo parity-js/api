@@ -37,7 +37,10 @@ class Api extends EventEmitter {
     if (isFunction(provider.sendAsync)) {
       provider = new Providers.Current(provider);
     } else if (!isFunction(provider.send)) {
-      console.warn(new Error('deprecated: Api needs provider with send() function, old-style Transport found instead'), provider);
+      console.warn(
+        new Error('deprecated: Api needs provider with send() function, old-style Transport found instead'),
+        provider
+      );
     }
 
     this._provider = new Providers.PromiseProvider(provider);
@@ -60,7 +63,7 @@ class Api extends EventEmitter {
     if (middlewareClass) {
       const middleware = this.parity
         .nodeKind()
-        .then((nodeKind) => {
+        .then(nodeKind => {
           if (nodeKind.availability === 'public') {
             return middlewareClass;
           }
@@ -178,14 +181,14 @@ class Api extends EventEmitter {
     return new Promise((resolve, reject) => {
       const timeout = () => {
         this[group][endpoint](input)
-          .then((result) => {
+          .then(result => {
             if (validate ? validate(result) : result) {
               resolve(result);
             } else {
               setTimeout(timeout, 500);
             }
           })
-          .catch((error) => {
+          .catch(error => {
             // Don't print if the request is rejected: that's ok
             if (error.type !== 'REQUEST_REJECTED') {
               console.error('pollMethod', error);
@@ -204,6 +207,7 @@ Api.util = util;
 
 Api.Provider = {
   Current: Providers.Current,
+  Ipc: Providers.Ipc,
   Http: Providers.Http,
   PostMessage: Providers.PostMessage,
   SendAsync: Providers.SendAsync,
