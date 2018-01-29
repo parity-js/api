@@ -17,7 +17,7 @@
 const EventEmitter = require('eventemitter3');
 
 // https://github.com/electron/electron/issues/2288
-const IS_ELECTRON = !!(window && window.process && window.process.type);
+const IS_ELECTRON = !!(typeof window !== 'undefined' && window && window.process && window.process.type);
 
 let ipcRenderer;
 
