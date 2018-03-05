@@ -14,28 +14,23 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
-const Db = require('./db');
-const Eth = require('./eth');
-const Evm = require('./evm');
-const Parity = require('./parity');
-const Net = require('./net');
-const Personal = require('./personal');
-const Shell = require('./shell');
-const Shh = require('./shh');
-const Signer = require('./signer');
-const Trace = require('./trace');
-const Web3 = require('./web3');
+/* eslint-disable no-unused-expressions */
 
-module.exports = {
-  Db,
-  Eth,
-  Evm,
-  Parity,
-  Net,
-  Personal,
-  Shell,
-  Shh,
-  Signer,
-  Trace,
-  Web3
-};
+const { TEST_HTTP_URL, mockHttp } = require('../../../test/mockRpc');
+
+const { Http, PromiseProvider } = require('../../provider');
+const Evm = require('./evm');
+
+const instance = new Evm(new PromiseProvider(new Http(TEST_HTTP_URL, -1)));
+
+describe('rpc/Evm', () => {
+  describe('increaseTime', () => {
+    it('returns the total time adjustment, in seconds', () => {
+      mockHttp([{ method: 'evm_increaseTime', reply: { result: '0x123456' } }]);
+
+      return instance.increaseTime(1).then((increase) => {
+        expect(increase).to.equal('0x123456');
+      });
+    });
+  });
+});

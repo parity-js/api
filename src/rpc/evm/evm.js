@@ -14,28 +14,17 @@
 // You should have received a copy of the GNU General Public License
 // along with Parity.  If not, see <http://www.gnu.org/licenses/>.
 
-const Db = require('./db');
-const Eth = require('./eth');
-const Evm = require('./evm');
-const Parity = require('./parity');
-const Net = require('./net');
-const Personal = require('./personal');
-const Shell = require('./shell');
-const Shh = require('./shh');
-const Signer = require('./signer');
-const Trace = require('./trace');
-const Web3 = require('./web3');
+const { inHex } = require('../../format/input');
 
-module.exports = {
-  Db,
-  Eth,
-  Evm,
-  Parity,
-  Net,
-  Personal,
-  Shell,
-  Shh,
-  Signer,
-  Trace,
-  Web3
-};
+class Evm {
+  constructor (provider) {
+    this._provider = provider;
+  }
+
+  increaseTime (increase) {
+    return this._provider
+      .send('evm_increaseTime', inHex(increase));
+  }
+}
+
+module.exports = Evm;
