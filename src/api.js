@@ -20,7 +20,7 @@ const Contract = require('./contract');
 const Providers = require('./provider');
 const Transports = require('./transport');
 
-const { Db, Eth, Parity, Net, Personal, Shell, Shh, Signer, Trace, Web3 } = require('./rpc');
+const { Db, Eth, Parity, Net, Personal, Private, Shell, Shh, Signer, Trace, Web3 } = require('./rpc');
 const Subscriptions = require('./subscriptions');
 const Pubsub = require('./pubsub');
 const util = require('./util');
@@ -52,7 +52,8 @@ class Api extends EventEmitter {
     this._eth = new Eth(this._provider);
     this._net = new Net(this._provider);
     this._parity = new Parity(this._provider);
-    this._personal = new Personal(this._provider);
+	this._personal = new Personal(this._provider);
+	this._private = new Private(this._provider);
     this._shell = new Shell(this._provider);
     this._shh = new Shh(this._provider);
     this._signer = new Signer(this._provider);
@@ -120,6 +121,10 @@ class Api extends EventEmitter {
 
   get personal () {
     return this._personal;
+  }
+
+  get private () {
+    return this._private;
   }
 
   get provider () {

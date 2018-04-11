@@ -206,6 +206,24 @@ function outReceipt (receipt) {
   return receipt;
 }
 
+function outPrivateReceipt (receipt) {
+  if (receipt) {
+    Object.keys(receipt).forEach((key) => {
+      switch (key) {
+        case 'status':
+          receipt[key] = outNumber(receipt[key]);
+          break;
+
+        case 'contractAddress':
+          receipt[key] = outAddress(receipt[key]);
+          break;
+      }
+    });
+  }
+
+  return receipt;
+}
+
 function outRecentDapps (recentDapps) {
   if (recentDapps) {
     Object.keys(recentDapps).forEach((url) => {
@@ -426,6 +444,7 @@ module.exports = {
   outNumber,
   outPeer,
   outPeers,
+  outPrivateReceipt,
   outReceipt,
   outRecentDapps,
   outSignerRequest,
