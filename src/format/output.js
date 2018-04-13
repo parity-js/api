@@ -185,14 +185,11 @@ function outPeers (peers) {
   };
 }
 
-function outReceipt (receipt) {
+function outPrivateReceipt (receipt) {
   if (receipt) {
     Object.keys(receipt).forEach((key) => {
       switch (key) {
-        case 'blockNumber':
-        case 'cumulativeGasUsed':
-        case 'gasUsed':
-        case 'transactionIndex':
+        case 'status':
           receipt[key] = outNumber(receipt[key]);
           break;
 
@@ -206,11 +203,14 @@ function outReceipt (receipt) {
   return receipt;
 }
 
-function outPrivateReceipt (receipt) {
+function outReceipt (receipt) {
   if (receipt) {
     Object.keys(receipt).forEach((key) => {
       switch (key) {
-        case 'status':
+        case 'blockNumber':
+        case 'cumulativeGasUsed':
+        case 'gasUsed':
+        case 'transactionIndex':
           receipt[key] = outNumber(receipt[key]);
           break;
 
