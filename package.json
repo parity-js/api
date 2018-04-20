@@ -72,7 +72,7 @@
     "@parity/abi": "2.1.x",
     "@parity/jsonrpc": "2.1.x",
     "@parity/wordlist": "1.1.x",
-    "bignumber.js": "3.0.1",
+    "bignumber.js": "4.1.0",
     "blockies": "0.0.2",
     "es6-error": "4.0.2",
     "es6-promise": "^4.1.1",
