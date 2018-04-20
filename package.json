@@ -69,7 +69,7 @@
     "sinon-chai": "2.8.0"
   },
   "dependencies": {
-    "@parity/abi": "^2.1.4",
+    "@parity/abi": "~2.1.4",
     "@parity/jsonrpc": "2.1.x",
     "@parity/wordlist": "1.1.x",
     "bignumber.js": "4.1.0",
