@@ -24,6 +24,8 @@ function createProvider () {
 
 describe('provider/IpcProvider', () => {
   it('throws error if not Electron', () => {
-    expect(createProvider).to.throw('IpcProvider must be used in Electron environment.');
+    expect(createProvider).to.throw(
+      'IpcProvider must be used in Electron environment along with inject.js.'
+    );
   });
 });
