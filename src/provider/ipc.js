@@ -16,15 +16,6 @@
 
 const EventEmitter = require('eventemitter3');
 
-// https://github.com/electron/electron/issues/2288
-const IS_ELECTRON = !!(typeof window !== 'undefined' && window && window.process && window.process.type);
-
-let ipcRenderer;
-
-if (IS_ELECTRON) {
-  ipcRenderer = window.require('electron').ipcRenderer;
-}
-
 const METHOD_REQUEST_TOKEN = 'shell_requestNewToken';
 
 class Ipc extends EventEmitter {
@@ -36,11 +27,17 @@ class Ipc extends EventEmitter {
     this._messages = {};
     this._queued = [];
 
-    if (!IS_ELECTRON) {
-      throw new Error('IpcProvider must be used in Electron environment.');
+    if (
+      typeof window === 'undefined' ||
+      !window.parity ||
+      !window.parity.electron
+    ) {
+      throw new Error(
+        'IpcProvider must be used in Electron environment along with inject.js.'
+      );
     }
 
-    ipcRenderer.on('PARITY_SHELL_IPC_CHANNEL', this.receiveMessage.bind(this));
+    window.parity.electron.onReceiveMessage(this.receiveMessage.bind(this));
   }
 
   _constructMessage (id, data) {
@@ -73,7 +70,7 @@ class Ipc extends EventEmitter {
   requestNewToken () {
     return new Promise((resolve, reject) => {
       // Webview is ready when receivin the ping
-      ipcRenderer.once('ping', () => {
+      window.parity.electron.onReceivePing(() => {
         this.send(METHOD_REQUEST_TOKEN, [], (error, token) => {
           if (error) {
             reject(error);
@@ -98,7 +95,7 @@ class Ipc extends EventEmitter {
 
     this._messages[id] = Object.assign({}, postMessage, message.options);
 
-    ipcRenderer.sendToHost('parity', { data: postMessage });
+    window.parity.electron.sendToHost({ data: postMessage });
   }
 
   send (method, params, callback) {
