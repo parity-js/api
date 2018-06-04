@@ -33,7 +33,11 @@ function outAccountInfo (infos) {
 
       if (info.meta) {
         ret[address].uuid = info.uuid;
-        ret[address].meta = JSON.parse(info.meta);
+        try {
+          ret[address].meta = JSON.parse(info.meta);
+        } catch (e) {
+          console.error(`Couldn't parse meta field of JSON key file ${info.uuid}`);
+        }
       }
 
       return ret;
