@@ -1,3 +1,7 @@
+# IMPORTANT
+
+**This repository is not maintained anymore. It has been moved to https://github.com/paritytech/js-libs/tree/master/packages/api.**
+
 # @parity/api
 
 Parity.js is a thin, fast, Promise-based wrapper around the Ethereum APIs.
